@@ -25,6 +25,7 @@ from amptorch.dataset_lmdb import (
 from amptorch.descriptor.util import list_symbols_to_indices
 from amptorch.metrics import evaluator
 from amptorch.model import BPNN, SingleNN, CustomLoss
+from amptorch.gp_model import GPModel 
 from amptorch.preprocessing import AtomsToData
 from amptorch.utils import (
     to_tensor,
@@ -172,6 +173,10 @@ class AtomsTrainer:
             )
         elif model == "singlenn":
             self.model = SingleNN(
+                elements=elements, input_dim=self.input_dim, **self.config["model"]
+            )
+        elif model == 'sparseGP':
+            self.model = GPModel(
                 elements=elements, input_dim=self.input_dim, **self.config["model"]
             )
         else:
